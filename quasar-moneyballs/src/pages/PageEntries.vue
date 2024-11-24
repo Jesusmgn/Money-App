@@ -1,240 +1,89 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <q-list 
-      bordered 
-      separator
-      >
 
-      <q-slide-item
-        v-for="entry in entries"
-        :key="entry.id"
-        @right="onEntrySlideRight($event, entry)"
-        left-color="positive"
-        right-color="negative"
+      <template
+        v-if="storeEntries.entriesLoaded"
       >
-        <!--template v-slot:left>
-          <q-icon name="done" />
-        </template -->
-        <template v-slot:right>
-          <q-icon name="delete" />
-        </template>
-        <q-item>
-          <q-item-section
-            class="text-weight-bold"
-            :class="useAmountColorClass(entry.amount)"
-          > 
-          {{ entry.name }}
-          </q-item-section>
+        <transition
+          appear
+          enter-active-class="animated jackInTheBox slower"
+        >
+          <NothingHere
+            v-if="!storeEntries.entriesOrdered.length"
+          />
+        </transition>
 
-          <q-item-section 
-            class="text-weight-bold"
-            :class="useAmountColorClass(entry.amount)"
-            side
+        <q-list
+          v-if="storeEntries.entriesOrdered.length"
+          class="entries"
+        >
+
+          <Sortable
+            @end="storeEntries.sortEnd"
+            :list="storeEntries.entriesOrdered"
+            :options="{ handle: '.handle' }"
+            item-key="id"
+            tag="div"
           >
-            {{ useCurrencify(entry.amount) }}
-          </q-item-section>
-        </q-item>
+            <template #item="{element, index}">
+              <Entry
+                :key="element.id"
+                :entry="element"
+                :index="index"
+              />
+            </template>
+          </Sortable>
 
-        </q-slide-item>
+        </q-list>
+      </template>
 
-      </q-list>
+      <div
+        v-else
+        class="text-center q-pa-xl"
+      >
+        <q-spinner
+          color="primary"
+          size="3em"
+          :thickness="10"
+        />
+      </div>
+
     </div>
 
     <q-footer
       class="bg-transparent"
     >
-      <div class="row q-mb-sm q-px-md q-py-sm shadow-up-3">
-        <div class="col text-grey-7 text-h6">
-          Balance:
-        </div>
-        <div 
-          :class="useAmountColorClass(balance)"
-          class="col text-h6 text-right">
-          {{ useCurrencify (balance) }}
-        </div>
-      </div>
-      <q-form 
-        @submit="addEntry"
-        class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary"
+      <transition
+        appear
+        enter-active-class="animated fadeInUp"
+        leave-active-class="animated fadeOutDown"
       >
-        <div class="col">
-          <q-input 
-            v-model="addEntryForm.name"
-            ref="nameRef"
-            placeholder="Name"
-            bg-color="white" 
-            outlined
-            dense
-          />
-        </div>
-        <div class="col">
-          <q-input 
-            v-model.number="addEntryForm.amount"
-            input-class="text-right"
-            placeholder="Amount"
-            bg-color="white" 
-            type="number"
-            step="0.01"
-            outlined
-            dense
-          />
-        </div>
-        <div class="col col-auto">
-          <q-btn 
-            color="primary" 
-            icon="add" 
-            type="submit"
-            round 
-          />
-        </div>
-      </q-form>
+        <Balance v-if="storeEntries.entriesOrdered.length" />
+      </transition>
+      <AddEntry />
     </q-footer>
   </q-page>
 </template>
 
 <script setup>
 
-/*
-  imports
-*/
+  /*
+    imports
+  */
 
-  import { ref, computed, reactive } from 'vue'
-  import { uid, useQuasar} from 'quasar'
-  import { useCurrencify } from 'src/use/useCurrencify'
-  import { useAmountColorClass } from 'src/use/useAmountColorClass'
-
-/*
-  quasar
-*/
-
-  const $q = useQuasar()
+    import { useStoreEntries } from 'src/stores/storeEntries'
+    import Balance from 'src/components/Entries/Balance.vue'
+    import AddEntry from 'src/components/Entries/AddEntry.vue'
+    import Entry from 'src/components/Entries/Entry.vue'
+    import NothingHere from 'src/components/Entries/NothingHere.vue'
+    import { Sortable } from 'sortablejs-vue3'
 
 
-/*
-  entries
-*/
+  /*
+    stores
+  */
 
-  const entries = ref([
-    {
-      id: 'id0',
-      name: 'Salary',
-      amount: 4999.99
-    },
-    {
-      id: 'id1',
-      name: 'Rent',
-      amount: -999
-    },
-    {
-      id: 'id2',
-      name: 'Phone',
-      amount: -14.99
-    },
-    {
-      id: 'id4',
-      name: 'Unknown',
-      amount: 0
-    },
-  ])
-
-/*
-    balance
-*/
-    // metodo largo 
-    // const balance = computed(() => {
-    //   let balance = 0
-    //   entries.value.forEach(entry => {
-    //     balance = balance + entry.amount
-    //   })
-    //   return balance
-    // })
-
-
-    // metodo corto 
-    const balance = computed(() => {
-      return entries.value.reduce((accumulator, { amount }) =>{
-        return accumulator + amount
-      }, 0)
-    })
-
-/*
-    add entry
-*/
-
-    const nameRef = ref(null)
-
-    const addEntryFormDefault = {
-      name: '',
-      amount: null
-    }
-
-    const addEntryForm = reactive({
-      ...addEntryFormDefault
-    })
-
-    const addEntryFormReset = () => {
-      Object.assign(addEntryForm,  addEntryFormDefault)
-      nameRef.value.focus()
-    }
-
-    const addEntry = () => {
-      // const newEntry = {
-      // id: uid(),
-      // name: addEntryForm.name,
-      // amount: addEntryFrom.amount
-      // }
-
-      const newEntry = Object.assign({}, addEntryForm, { id: uid() })
-      entries.value.push(newEntry)
-      addEntryFormReset()
-    }
-
-/*
-  Slide items
-*/
-
-    const onEntrySlideRight = ({ reset }, entry) => {
-      $q.dialog({
-        title: 'Delete Entry',
-        message: `
-          Delete this entry?
-          <div class="q-mt-md text-weight-bold ${ useAmountColorClass(entry.amount) }">
-            ${ entry.name } : ${ useCurrencify(entry.amount) }
-          </div>
-          `,
-        cancel: true,
-        persistent: true,
-        html: true,
-        ok: {
-          label: 'Delete',
-          color: 'negative',
-          noCaps: true
-        },
-        cancel: {
-          color: 'primary',
-          noCaps: true
-        }
-      }).onOk(() => {
-        deleteEntry(entry.id)
-      }).onCancel(() => {
-        reset()
-      })
-    }
-
-
-/*
-    delete entry
-*/
-
-    const deleteEntry = entryId => {
-      const index = entries.value.findIndex(entry => entry.id === entryId)
-      entries.value.splice(index, 1)
-      $q.notify({
-        message: 'Entry deleted',
-        position: 'top'
-      })
-    }
-
+    const storeEntries = useStoreEntries()
 
 </script>
