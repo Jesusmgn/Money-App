@@ -21,7 +21,7 @@
         class="row"
       >
         <div class="col text-caption text-grey-6">
-          Paid:
+          Paid: 
           <span
             class="text-weight-bold"
             :class="useAmountColorClass(storeEntries.balancePaid)"
@@ -40,17 +40,17 @@
   /*
     imports
   */
-
+  
     import { useStoreEntries } from 'src/stores/storeEntries'
     import { useCurrencify } from 'src/use/useCurrencify'
     import { useAmountColorClass } from 'src/use/useAmountColorClass'
     import { useLightOrDark } from 'src/use/useLightOrDark'
 
-
+    
   /*
     stores
   */
-
+  
     const storeEntries = useStoreEntries()
 
 </script>

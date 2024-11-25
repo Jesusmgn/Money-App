@@ -27,7 +27,7 @@
             tag="div"
           >
             <template #item="{element, index}">
-              <Entry
+              <Entry 
                 :key="element.id"
                 :entry="element"
                 :index="index"
@@ -71,7 +71,7 @@
   /*
     imports
   */
-
+  
     import { useStoreEntries } from 'src/stores/storeEntries'
     import Balance from 'src/components/Entries/Balance.vue'
     import AddEntry from 'src/components/Entries/AddEntry.vue'
@@ -83,7 +83,7 @@
   /*
     stores
   */
-
+  
     const storeEntries = useStoreEntries()
 
 </script>

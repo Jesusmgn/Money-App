@@ -7,7 +7,7 @@ export const useStoreSettings = defineStore('settings', () => {
   /*
     state
   */
-
+  
     const settings = reactive({
       promptToDelete: true,
       showRunningBalance: false,
@@ -29,13 +29,13 @@ export const useStoreSettings = defineStore('settings', () => {
   /*
     getters
   */
-
+  
 
 
   /*
     actions
   */
-
+  
     const saveSettings = () => {
       LocalStorage.set('settings', settings)
     }
@@ -49,8 +49,8 @@ export const useStoreSettings = defineStore('settings', () => {
   /*
     return
   */
-
-    return {
+  
+    return { 
 
       // state
       settings,
@@ -61,5 +61,5 @@ export const useStoreSettings = defineStore('settings', () => {
       loadSettings
 
     }
-
+    
 })

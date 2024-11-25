@@ -16,13 +16,13 @@
         <q-toolbar-title>
           <div class="absolute-center">
             <div class="toolbar-title-text">
-              <q-icon name="savings" />
+              <q-icon name="savings" /> 
               Moneyballs
             </div>
           </div>
         </q-toolbar-title>
 
-        <q-btn
+        <q-btn 
           v-if="$route.fullPath === '/'"
           @click="storeEntries.options.sort = !storeEntries.options.sort"
           :label="!storeEntries.options.sort ? 'Sort' : 'Done'"

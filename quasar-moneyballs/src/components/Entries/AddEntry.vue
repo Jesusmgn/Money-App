@@ -44,7 +44,7 @@
   /*
     imports
   */
-
+  
     import { ref, reactive } from 'vue'
     import { useQuasar } from 'quasar'
     import { useStoreEntries } from 'src/stores/storeEntries'
@@ -55,14 +55,14 @@
   /*
     quasar
   */
-
+  
     const $q = useQuasar()
 
 
   /*
     stores
   */
-
+  
     const storeEntries = useStoreEntries()
 
 
@@ -85,7 +85,7 @@
       Object.assign(addEntryForm, addEntryFormDefault)
       if (!$q.platform.is.capacitor) nameRef.value.focus()
     }
-
+  
   const addEntryFormSubmit = () => {
     storeEntries.addEntry(addEntryForm)
     addEntryFormReset()

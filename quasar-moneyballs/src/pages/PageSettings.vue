@@ -26,7 +26,7 @@
             />
           </q-item-section>
         </q-item>
-
+        
         <q-item tag="label" v-ripple>
           <q-item-section>
             <q-input
@@ -89,7 +89,7 @@
   /*
     imports
   */
-
+  
     import { useStoreSettings } from 'src/stores/storeSettings'
     import vSelectAll from 'src/directives/directiveSelectAll'
 
@@ -97,7 +97,7 @@
   /*
     stores
   */
-
+  
     const storeSettings = useStoreSettings()
 
 </script>
