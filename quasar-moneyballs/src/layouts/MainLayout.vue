@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStoreEntries } from 'src/stores/storeEntries'
 import { useLightOrDark } from 'src/use/useLightOrDark'
@@ -62,7 +62,7 @@ defineOptions({
 const $q = useQuasar(),
   storeEntries = useStoreEntries()
 
-const navLinks = [
+const navLinks = computed(() =>[
   {
     title: t('layout.entries'),
     icon: 'savings',
@@ -73,7 +73,7 @@ const navLinks = [
     icon: 'settings',
     link: '/settings'
   }
-]
+])
 const showEntries = ref(t('layout.entries'))
 
 const leftDrawerOpen = ref(false)
