@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useStoreSettings } from 'src/stores/storeSettings'
 import { useStoreEntries } from 'src/stores/storeEntries'
+import { useI18n } from 'vue-i18n';
 
 defineOptions({
   name: 'App'

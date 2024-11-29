@@ -130,11 +130,13 @@
     import { useLightOrDark } from 'src/use/useLightOrDark'
     import vSelectAll from 'src/directives/directiveSelectAll'
     import vAutofocus from 'src/directives/directiveAutofocus'
-
-
+    import { watch } from 'vue'
+    import { useI18n } from 'vue-i18n'
   /*
     stores
   */
+    const { locale } = useI18n();
+    const {t} = useI18n();
   
     const storeEntries = useStoreEntries(),
           storeSettings = useStoreSettings()
@@ -179,8 +181,8 @@
     const promptToDelete = async (reset) => {
 
       const entryDetails = `${ props.entry.name } : ${ useCurrencify(props.entry.amount) }`,
-            title = 'Delete Entry',
-            messageStart = 'Delete this Entry?',
+            title = t('entries.deleteEntry'),
+            messageStart = t('entries.wDeleteEntry'),
             message = $q.platform.is.capacitor
                       ? `${ messageStart }\n\n${ entryDetails }`
                       : `
@@ -189,7 +191,7 @@
                           ${ entryDetails }
                         </div>
                       `,
-            okButtonTitle = 'Delete'
+            okButtonTitle = t('entries.delete')
 
       if ($q.platform.is.capacitor) {
         const { value } = await Dialog.confirm({
@@ -236,5 +238,18 @@
     const onAmountUpdate = value => {
       storeEntries.updateEntry(props.entry.id, { amount: value })
     }
+  // Al montar el componente, leer el idioma desde localStorage
+  const storedLang = localStorage.getItem('language') || 'en'; // Idioma por defecto si no hay uno en localStorage
+  locale.value = storedLang; // Establecer el idioma global
+
+  // Si deseas hacer que el idioma se actualice automáticamente cuando cambie el valor en el localStorage:
+  watch(
+    () => localStorage.getItem('language'),
+    (newLang) => {
+      if (newLang) {
+        locale.value = newLang; // Actualizar el idioma si se cambia en el localStorage
+      }
+    }
+  );
 
 </script>

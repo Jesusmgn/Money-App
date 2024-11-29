@@ -1,0 +1,34 @@
+{
+    "settings": {
+      "entries": "Entries",
+      "promptToDelete": "Prompt to Delete",
+      "showRunningBalance": "Show Running Balance",
+      "currencySymbol": "Currency Symbol",
+      "appearance": "Appearance",
+      "lightMode": "Light Mode",
+      "darkMode": "Dark Mode",
+      "autoMode": "Auto Mode",
+      "devicePreference": "Based on Device Preference",
+      "language": "Language"
+    },
+    "entries": {
+        "nothingHere": "Nothing here",
+        "addEntry": "Add Entry",
+        "balance": "Balance",
+        "paid": "paid",
+        "name": "Amount",
+        "amount": "Amount",
+        "deleteEntry": "Delete Entry",
+        "wDeleteEntry":"Delete this Entry? ",
+        "delete": "Delete",
+        "cancel": "Cancel"
+      },
+      "layout":{
+        "navigation": "Navigation",
+        "entries": "Entries",
+        "settings": "Settings ",
+        "done": "Done",
+        "sort": "Sort"
+      }
+  }
+  

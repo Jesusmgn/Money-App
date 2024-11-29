@@ -1,0 +1,33 @@
+{
+    "settings": {
+      "entries": "Entradas",
+      "promptToDelete": "Solicitar confirmación para eliminar",
+      "showRunningBalance": "Mostrar saldo acumulado",
+      "currencySymbol": "Símbolo de moneda",
+      "appearance": "Apariencia",
+      "lightMode": "Modo claro",
+      "darkMode": "Modo oscuro",
+      "autoMode": "Modo automático",
+      "devicePreference": "Basado en la preferencia del dispositivo",
+      "language": "Idioma"
+    },  "entries": {
+        "nothingHere": "Nada aquí",
+        "addEntry": "Agregar entrada",
+        "balance": "Balance",
+        "paid": "pagado",
+        "name": "Nombre",
+        "amount": "Monto",
+        "deleteEntry": "Eliminar Elemento",
+        "wDeleteEntry":"Deseas eliminar este elemento? ",
+        "delete": "Eliminar",
+        "cancel": "Cancelar"
+      },
+      "layout":{
+        "navigation": "Navegación",
+        "entries": "Entradas",
+        "settings": "Configuraciones ",
+        "done": "Hecho",
+        "sort": "Clasificar"
+      }
+  }
+  
